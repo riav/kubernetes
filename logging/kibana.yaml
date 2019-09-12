@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kibana
+  namespace: logging
+spec:
+  selector:
+    matchLabels:
+      run: kibana
+  template:
+    metadata:
+      labels:
+        run: kibana
+    spec:
+      nodeSelector:
+        env: infra
+      containers:
+      - name: kibana
+        image: docker.elastic.co/kibana/kibana-oss:6.6.1
+        env:
+        - name: ELASTICSEARCH_URL
+          value: http://elasticsearch:9200
+        ports:
+        - containerPort: 5601
+          name: http
+          protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana
+  namespace: logging
+  labels:
+    service: kibana
+spec:
+  selector:
+    run: kibana
+  type: NodePort
+  ports:
+  - port: 5601
+    targetPort: 5601
+    nodePort: 30080
+    protocol: TCP
