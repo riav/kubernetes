@@ -12,8 +12,8 @@ spec:
       labels:
         run: kibana
     spec:
-      nodeSelector:
-        env: infra
+      #nodeSelector:
+      #  env: infra
       containers:
       - name: kibana
         image: docker.elastic.co/kibana/kibana-oss:6.6.1
