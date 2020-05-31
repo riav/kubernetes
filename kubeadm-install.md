@@ -48,6 +48,26 @@ Essa instalação do CentOs7 está baseada na ISO [CentOS-7-x86_64-Minimal-1810.
     yum install docker-ce -y &&\
     systemctl enable docker
     
+### Configurando o cgroupdrive para systemd
+    mkdir /etc/docker
+    
+    # Set up the Docker daemon
+    cat > /etc/docker/daemon.json <<EOF
+    {
+      "exec-opts": ["native.cgroupdriver=systemd"],
+      "log-driver": "json-file",
+      "log-opts": {"max-size": "100m"},
+      "storage-driver": "overlay2",
+      "storage-opts": ["overlay2.override_kernel_check=true"]
+    }
+    EOF
+    
+    mkdir -p /etc/systemd/system/docker.service.d
+    
+    # Restart Docker
+    systemctl daemon-reload
+    systemctl restart docker
+    
 ### Instalação do Kubernetes
 
 #### Adiconando repositório do k8s
@@ -69,8 +89,7 @@ Essa instalação do CentOs7 está baseada na ISO [CentOS-7-x86_64-Minimal-1810.
     source <(kubectl completion bash)
 
 #### Ajuste de parametros no kernel
-    echo -e 'net.bridge.bridge-nf-call-ip6tables = 1\nnet.bridge.bridge-nf-call-iptables = 1' >> /etc/sysctl.d/k8s.conf &&\
-    echo 'fs.inotify.max_user_watches' = 81920 >> /etc/sysctl.d/k8s.conf
+    echo -e 'net.bridge.bridge-nf-call-ip6tables = 1\nnet.bridge.bridge-nf-call-iptables = 1\nfs.inotify.max_user_watches = 81920' >> /etc/sysctl.d/k8s.conf
     
 ### Reiniciei o host após toda a execução dos passos:
     reboot
