@@ -68,6 +68,10 @@ Essa instalação do CentOs7 está baseada na ISO [CentOS-7-x86_64-Minimal-1810.
     systemctl daemon-reload
     systemctl restart docker
     
+    cat > /etc/sysconfig/kubelet <<EOF
+    KUBELET_EXTRA_ARGS=--cgroup-driver=systemd
+    EOF
+    
 ### Instalação do Kubernetes
 
 #### Adiconando repositório do k8s
