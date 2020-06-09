@@ -111,7 +111,7 @@ Essa instalação do CentOs7 está baseada na ISO [CentOS-7-x86_64-Minimal-1810.
     PUB_KEY=$(openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null \
     | openssl dgst -sha256 -hex | sed 's/^.* //') &&\
     TOKEN=$(kubeadm token list | grep default-node-token | awk '{print $1}') &&\
-    echo "kubeadm join $(hostanme -i):6443 --token $TOKEN --discovery-token-ca-cert-hash sha256:$PUB_KEY"
+    echo "kubeadm join $(hostname -i):6443 --token $TOKEN --discovery-token-ca-cert-hash sha256:$PUB_KEY"
 
 #### Criando novo join caso o default se perca com o tempo
 
