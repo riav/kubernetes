@@ -46,7 +46,8 @@ Essa instalação do CentOs7 está baseada na ISO [CentOS-7-x86_64-Minimal-1810.
 ### Instalação do Docker
     yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo &&\
     yum install docker-ce -y &&\
-    systemctl enable docker
+    systemctl enable docker &&\
+    systemctl start docker
     
 ### Configurando o cgroupdrive para systemd
     mkdir /etc/docker
@@ -104,6 +105,10 @@ Essa instalação do CentOs7 está baseada na ISO [CentOS-7-x86_64-Minimal-1810.
     kubeadm init --apiserver-advertise-address $(hostname -i)
 
 #### Copiar o JOIN para inserir os nodes workes
+
+#### Criando novo join caso o default se perca com o tempo
+
+    kubeadm token create --print-join-command
 
 ### Ajustando configuração
     mkdir -p $HOME/.kube &&\
