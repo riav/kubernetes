@@ -127,3 +127,11 @@ Essa instalação do CentOs7 está baseada na ISO [CentOS-7-x86_64-Minimal-1810.
 
 ### Verificar os nodes
     kubectl get pods -n kube-system
+    
+### Removendo um node
+#### Manager
+    kubectl drain <node-name> --ignore-daemonsets --delete-local-data
+    kubectl delete node <node-name>
+#### Worker
+    kubeadm reset
+
