@@ -36,7 +36,8 @@ Ter o docker instalado
     kind create cluster --config cluster-kind.yaml
     
     # kubectl
-    K8S_VERSION=$(kind get clusters) &&\
-    sudo wget https://storage.googleapis.com/kubernetes-release/release/$K8S_VERSION/bin/linux/amd64/kubectl \
-    -O /usr/local/bin/kubectl &&\
+    K8S_VERSION=$(docker ps -a | grep control-plane | head -1 | awk '{print $2}' | awk -F: '{print $2}') &&\
+    KUBECTL_URL=https://storage.googleapis.com/kubernetes-release/release/$K8S_VERSION/bin/linux/amd64/kubectl &&\
+    command -v wget && CMD_GET="wget $KUBECTL_URL -O /usr/local/bin/kubectl" || CMD_GET="curl -Lk $KUBECTL_URL -o /usr/local/bin/kubectl"
+    sudo $CMD_GET &&\
     sudo chmod +x /usr/local/bin/kubectl
