@@ -57,6 +57,13 @@ Ter o docker instalado
     sudo $CMD_GET_KCTL &&\
     sudo chmod +x /usr/local/bin/kubectl
     
+    # Pós instalação
+    kind get clusters
+    
+    kind get nodes --name k8s-cluster
+    
+    kubectl get nodes -o wide
+    
 ## Remoção
 
     kind delete cluster --name k8s-cluster
