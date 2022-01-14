@@ -2,6 +2,12 @@
 
 https://kind.sigs.k8s.io/
 
+## Pré Requisito
+
+Ter o docker instalado
+
+    docker info
+
 ## Instalação
 
     # kind
