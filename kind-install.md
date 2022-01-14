@@ -29,6 +29,19 @@ Ter o docker instalado
     #  serviceSubnet: "10.96.0.0/12"
     nodes:
     - role: control-plane
+      kubeadmConfigPatches:
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "ingress-ready=true"    
+      extraPortMappings:
+      - containerPort: 80
+        hostPort: 80
+        protocol: TCP
+      - containerPort: 443
+        hostPort: 443
+        protocol: TCP
     - role: worker
     - role: worker
     #- role: worker
