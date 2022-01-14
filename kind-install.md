@@ -43,3 +43,7 @@ Ter o docker instalado
     command -v wget && CMD_GET_KCTL="wget $KUBECTL_URL -O /usr/local/bin/kubectl" || CMD_GET_KCTL="curl -Lk $KUBECTL_URL -o /usr/local/bin/kubectl" &&\
     sudo $CMD_GET_KCTL &&\
     sudo chmod +x /usr/local/bin/kubectl
+    
+## Remoção
+
+    kind delete cluster --name k8s-cluster
