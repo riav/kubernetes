@@ -11,7 +11,9 @@ Ter o docker instalado
 ## Instalação
 
     # kind
-    sudo curl -Lo /usr/local/bin/kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64 &&\
+    KIND_URL="https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64" &&\
+    command -v wget && CMD_GET_KIND="wget $KIND_URL -O /usr/local/bin/kind" || CMD_GET_KIND="curl -Lk $KIND_URL -o /usr/local/bin/kind" &&\
+    sudo CMD_GET_KIND &&\
     sudo chmod +x /usr/local/bin/kind &&\
     source <(kind completion bash) &&\
     echo 'source <(kind completion bash)' >> ~/.bashrc
@@ -38,6 +40,6 @@ Ter o docker instalado
     # kubectl
     K8S_VERSION=$(docker ps -a | grep control-plane | head -1 | awk '{print $2}' | awk -F: '{print $2}') &&\
     KUBECTL_URL=https://storage.googleapis.com/kubernetes-release/release/$K8S_VERSION/bin/linux/amd64/kubectl &&\
-    command -v wget && CMD_GET="wget $KUBECTL_URL -O /usr/local/bin/kubectl" || CMD_GET="curl -Lk $KUBECTL_URL -o /usr/local/bin/kubectl"
-    sudo $CMD_GET &&\
+    command -v wget && CMD_GET_KCTL="wget $KUBECTL_URL -O /usr/local/bin/kubectl" || CMD_GET_KCTL="curl -Lk $KUBECTL_URL -o /usr/local/bin/kubectl" &&\
+    sudo $CMD_GET_KCTL &&\
     sudo chmod +x /usr/local/bin/kubectl
