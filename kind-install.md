@@ -64,6 +64,10 @@ Ter o docker instalado
     
     kubectl get nodes -o wide
     
+    kubectl config get-contexts
+    
+    kubectl config use-context <cluster_name>
+    
 ## Remoção
 
     kind delete cluster --name k8s-cluster
