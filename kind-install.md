@@ -68,6 +68,16 @@ Ter o docker instalado
     
     kubectl config use-context <cluster_name>
     
+    # Instalação nginx // Ingress
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+    
+    # Instalando aplicações de teste
+    kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/usage.yaml
+    
+    # Testando
+    curl http://localhost/foo
+    curl http://localhost/bar
+    
 ## Remoção
 
     kind delete cluster --name k8s-cluster
