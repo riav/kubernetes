@@ -6,10 +6,10 @@
     kubectl apply -f https://raw.githubusercontent.com/riav/kubernetes/master/ingress/nginx/controller-v0.49.3-cloud-deploy.yaml
     
     # Baremetal - NodePort
-    https://raw.githubusercontent.com/riav/kubernetes/master/ingress/nginx/controller-v0.49.3-baremetal-nodeport-deploy.yaml
+    kubectl apply -f https://raw.githubusercontent.com/riav/kubernetes/master/ingress/nginx/controller-v0.49.3-baremetal-nodeport-deploy.yaml
     
     # Baremetal - HostNetwork
-    https://raw.githubusercontent.com/riav/kubernetes/master/ingress/nginx/controller-v0.49.3-baremetal-host-deploy.yaml
+    kubectl apply -f https://raw.githubusercontent.com/riav/kubernetes/master/ingress/nginx/controller-v0.49.3-baremetal-host-deploy.yaml
     
 ## Pós instalação
 
