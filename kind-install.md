@@ -10,7 +10,8 @@ Ter o docker instalado
 
 ## Instalação
 
-    # kind
+### kind
+
     KIND_URL="https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64" &&\
     command -v wget && CMD_GET_KIND="wget $KIND_URL -O /usr/local/bin/kind" || CMD_GET_KIND="curl -Lk $KIND_URL -o /usr/local/bin/kind" &&\
     sudo CMD_GET_KIND &&\
@@ -18,8 +19,8 @@ Ter o docker instalado
     source <(kind completion bash) &&\
     echo 'source <(kind completion bash)' >> ~/.bashrc
     
-    # Instalação cluster
-    
+### Instalação cluster
+
     cat << EOF > cluster-kind.yaml
     kind: Cluster
     apiVersion: kind.x-k8s.io/v1alpha4
@@ -57,7 +58,8 @@ Ter o docker instalado
     sudo $CMD_GET_KCTL &&\
     sudo chmod +x /usr/local/bin/kubectl
     
-    # Pós instalação
+### Pós instalação
+
     kind get clusters
     
     kind get nodes --name k8s-cluster
@@ -67,6 +69,8 @@ Ter o docker instalado
     kubectl config get-contexts
     
     kubectl config use-context <cluster_name>
+    
+### Ingress
     
     # Instalação nginx // Ingress
     kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
