@@ -33,7 +33,7 @@ rules:
   - list
   - watch
 - apiGroups:
-  - "networking.k8s.io"
+  - networking.k8s.io
   resources:
   - ingresses
   - ingresses/status
