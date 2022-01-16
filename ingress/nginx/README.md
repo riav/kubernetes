@@ -1,4 +1,4 @@
-# Ingress - NGINX
+# Ingress - NGINX < k8s-1.19
 
 ## Instalação
 
