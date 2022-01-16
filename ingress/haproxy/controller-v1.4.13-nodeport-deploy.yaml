@@ -33,7 +33,6 @@ rules:
   - list
   - watch
 - apiGroups:
-  - extensions
   - networking.k8s.io   # k8s 1.14+
   resources:
   - ingresses
@@ -55,7 +54,6 @@ rules:
   - update
 - apiGroups:
   - extensions
-  - networking.k8s.io   # k8s 1.14+
   resources:
   - ingresses
   verbs:
