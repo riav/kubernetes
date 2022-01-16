@@ -1,6 +1,6 @@
-# Ingress - NGINX < k8s-1.19
+# Ingress - NGINX
 
-## Instalação
+## Instalação < k8s-1.19
 
     # Cloud
     kubectl apply -f https://raw.githubusercontent.com/riav/kubernetes/master/ingress/nginx/controller-v0.49.3-cloud-deploy.yaml
