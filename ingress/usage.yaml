@@ -1,15 +1,22 @@
-kind: Pod
-apiVersion: v1
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: foo-app
-  labels:
-    app: foo
 spec:
-  containers:
-  - name: foo-app
-    image: hashicorp/http-echo:0.2.3
-    args:
-    - "-text=foo"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: foo
+  template:
+    metadata:
+      labels:
+        app: foo
+    spec:
+      containers:
+        - name: foo-app
+          image: hashicorp/http-echo:0.2.3
+          args:
+          - "-text=foo"
 ---
 kind: Service
 apiVersion: v1
@@ -22,18 +29,25 @@ spec:
   # Default port used by the image
   - port: 5678
 ---
-kind: Pod
-apiVersion: v1
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: bar-app
-  labels:
-    app: bar
 spec:
-  containers:
-  - name: bar-app
-    image: hashicorp/http-echo:0.2.3
-    args:
-    - "-text=bar"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bar
+  template:
+    metadata:
+      labels:
+        app: bar
+    spec:
+      containers:
+        - name: bar-app
+          image: hashicorp/http-echo:0.2.3
+          args:
+          - "-text=bar"
 ---
 kind: Service
 apiVersion: v1
