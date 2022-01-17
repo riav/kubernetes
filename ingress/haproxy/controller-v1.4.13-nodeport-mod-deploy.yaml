@@ -199,10 +199,12 @@ spec:
     port: 80
     protocol: TCP
     targetPort: 80
+    nodePort: 30080
   - name: https
     port: 443
     protocol: TCP
     targetPort: 443
+    nodePort: 30443
   - name: stat
     port: 1024
     protocol: TCP
