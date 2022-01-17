@@ -57,6 +57,7 @@ kind: Ingress
 metadata:
   name: usage-replicas-ingress
 spec:
+  #ingressClassName: xxx
   rules:
   - host: usage.replicas
     http:
