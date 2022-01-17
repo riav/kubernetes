@@ -19,8 +19,9 @@ spec:
   selector:
     app: foo
   ports:
-  # Default port used by the image
-  - port: 5678
+  - name: http
+    port: 80
+    targetPort: 5678  # Default port used by the image
 ---
 kind: Pod
 apiVersion: v1
@@ -43,8 +44,9 @@ spec:
   selector:
     app: bar
   ports:
-  # Default port used by the image
-  - port: 5678
+  - name: http
+    port: 80
+    targetPort: 5678  # Default port used by the image
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -57,8 +59,8 @@ spec:
       - path: /foo
         backend:
           serviceName: foo-service
-          servicePort: 5678
+          servicePort: http
       - path: /bar
         backend:
           serviceName: bar-service
-          servicePort: 5678
+          servicePort: http
