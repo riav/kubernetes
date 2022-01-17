@@ -26,8 +26,9 @@ spec:
   selector:
     app: foo
   ports:
-  # Default port used by the image
-  - port: 5678
+  - name: http
+    port: 80
+    targetPort: 5678  # Default port used by the image
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -57,13 +58,15 @@ spec:
   selector:
     app: bar
   ports:
-  # Default port used by the image
-  - port: 5678
+  - name: http
+    port: 80
+    targetPort: 5678  # Default port used by the image
+
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: example-ingress
+  name: usage-ingress
 spec:
   rules:
   - http:
@@ -74,12 +77,12 @@ spec:
           service:
             name: foo-service
             port:
-              number: 5678
+              name: http
       - pathType: Prefix
         path: "/bar"
         backend:
           service:
             name: bar-service
             port:
-              number: 5678
+              name: http
 ---
