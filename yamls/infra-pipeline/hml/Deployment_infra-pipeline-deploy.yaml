@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: infra-pipeline-deploy
+  namespace: infra-pipeline-hml
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: infra-pipeline
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "9404"
+        prometheus.io/scrape: "false"
+        configHash-infra-pipeline-configmap: 41673f5f83c6b03b2eb254e5ecf013f0
+        secretHash-infra-pipeline-secrets-hk7mgt4bcb: 8ebef3badf0910260b74d379960a7cb3
+      labels:
+        app: infra-pipeline
+    spec:
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: infra-pipeline-configmap
+            - secretRef:
+                name: infra-pipeline-secrets-hk7mgt4bcb
+          image: nginx:1.20.1-alpine
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - wget -q -O- http://127.0.0.1:$PORT
+            initialDelaySeconds: 10
+            periodSeconds: 1
+            timeoutSeconds: 2
+          name: infra-pipeline
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - wget -q -O- http://127.0.0.1:$PORT
+            initialDelaySeconds: 10
+            periodSeconds: 1
+            timeoutSeconds: 2
+          resources:
+            limits:
+              cpu: 200m
+              memory: 64Mi
+            requests:
+              cpu: 100m
+              memory: 16Mi
+          volumeMounts:
+            - mountPath: /appconfig/application.properties
+              name: appconfig
+              subPath: application.properties
+      initContainers:
+        - command:
+            - /bin/sh
+            - -c
+            - source /tmp/entrypoint.sh
+          env:
+            - name: APPCONFIG_SRC
+              value: /tmp/application.properties
+            - name: APPCONFIG_DST
+              value: /appconfig/application.properties
+          envFrom:
+            - configMapRef:
+                name: infra-pipeline-configmap
+          image: alpine:3
+          name: infra-init
+          volumeMounts:
+            - mountPath: /tmp/entrypoint.sh
+              name: infra-init-configmap
+              subPath: entrypoint.sh
+            - mountPath: /tmp/application.properties
+              name: infra-appconfig-secret
+              subPath: application.properties
+            - mountPath: /appconfig
+              name: appconfig
+      volumes:
+        - name: infra-appconfig-secret
+          secret:
+            items:
+              - key: application.properties
+                path: application.properties
+            secretName: infra-appconfig-secret
+        - configMap:
+            name: infra-init-configmap
+          name: infra-init-configmap
+        - emptyDir: {}
+          name: appconfig

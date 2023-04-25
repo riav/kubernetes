@@ -1,0 +1,27 @@
+apiVersion: v1
+data:
+  entrypoint.sh: |-
+    #!/bin/sh
+    [ -z "$APPCONFIG_DST" ] && APPCONFIG_DST=${APPCONFIG_SRC}.tmp || true
+    cp -rf $APPCONFIG_SRC $APPCONFIG_DST
+    echo "($APPCONFIG_SRC) -> ($APPCONFIG_DST)"
+    if [ -n "$APPCONFIG_SRC" ]; then
+     #while IFS= read -r line
+     while IFS="" read -r line || [ -n "$line" ]
+     do
+      OPT=$(echo $line|grep -v ^#|cut -d= -f1)
+      echo "OPT: $OPT"
+      if [ -n "$OPT" ]; then
+       if env | grep -q ^"${OPT}="; then
+        VAL=$(env | grep ^"${OPT}=" | sed "s;${OPT}=;;;s;\";;g")
+        echo "${OPT}=${VAL}"
+        sed -i "s,${OPT}=.*,${OPT}=${VAL},g" $APPCONFIG_DST
+       fi
+      fi
+     done < "$APPCONFIG_SRC"
+     cat $APPCONFIG_DST
+    fi
+kind: ConfigMap
+metadata:
+  name: infra-init-configmap
+  namespace: infra-pipeline-hml

@@ -1,0 +1,9 @@
+defaultNamespace: infra-pipeline-hml
+#keepResources: true
+
+annotations:
+  deploy-pipeline-project: infra-pipeline
+  deploy-pipeline-id: "2331"
+  deploy-pipeline-commit: d5293746d8c37aa61f6e7be2bf5b2bd5c81cee41
+  deploy-pipeline-author: rafael.vasco
+  deploy-gitops-commit: f07d0ed6e556c654e9c6cabcd5fea45717e34003

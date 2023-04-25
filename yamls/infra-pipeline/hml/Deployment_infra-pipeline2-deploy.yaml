@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: infra-pipeline2-deploy
+  namespace: infra-pipeline-hml
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: infra-pipeline2
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "9404"
+        prometheus.io/scrape: "false"
+        configHash-infra-pipeline2-configmap: 95ceadc70ea7e68bf4500442ddd79577
+        secretHash-infra-pipeline-secrets-hk7mgt4bcb: 8ebef3badf0910260b74d379960a7cb3
+      labels:
+        app: infra-pipeline2
+    spec:
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: infra-pipeline2-configmap
+            - secretRef:
+                name: infra-pipeline-secrets-hk7mgt4bcb
+          image: nginx:1.20.1-alpine
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - wget -q -O- http://127.0.0.1:$PORT
+            initialDelaySeconds: 10
+            periodSeconds: 1
+            timeoutSeconds: 2
+          name: infra-pipeline2
+          ports:
+            - containerPort: 9090
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - wget -q -O- http://127.0.0.1:$PORT
+            initialDelaySeconds: 10
+            periodSeconds: 1
+            timeoutSeconds: 2
+          resources:
+            limits:
+              cpu: 200m
+              memory: 64Mi
+            requests:
+              cpu: 100m
+              memory: 16Mi

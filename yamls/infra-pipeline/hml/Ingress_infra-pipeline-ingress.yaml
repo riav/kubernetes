@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/app-root: /app1
+    ingress.kubernetes.io/ssl-redirect: "true"
+    kubernetes.io/ingress.class: haproxy-appshml
+  name: infra-pipeline-ingress
+  namespace: infra-pipeline-hml
+spec:
+  rules:
+    - host: infra-pipeline-hml.com.br
+      http:
+        paths:
+          - backend:
+              service:
+                name: infra-pipeline-service
+                port:
+                  name: svc-port
+            path: /app1
+            pathType: Prefix
+          - backend:
+              service:
+                name: infra-pipeline2-service
+                port:
+                  name: svc-port
+            path: /app2
+            pathType: Prefix
+  tls:
+    - hosts:
+        - infra-pipeline-hml.com.br

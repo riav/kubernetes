@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: infra-pipeline-service
+  namespace: infra-pipeline-hml
+spec:
+  ports:
+    - name: svc-port
+      port: 80
+      targetPort: 80
+  selector:
+    app: infra-pipeline

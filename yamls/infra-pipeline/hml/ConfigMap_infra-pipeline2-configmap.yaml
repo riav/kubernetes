@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  ENV: HML-2:20221503_01
+  PORT: "80"
+kind: ConfigMap
+metadata:
+  name: infra-pipeline2-configmap
+  namespace: infra-pipeline-hml

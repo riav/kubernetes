@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  ENV: HML-1:20221503_01${TESTE}
+  PORT: "80"
+  TESTE: teste-01
+  aplicacao.jcr.senha: senha_123456
+  aplicacao.jcr.url: url://xpto
+  aplicacao.jcr.usuario: user_xpto
+kind: ConfigMap
+metadata:
+  name: infra-pipeline-configmap
+  namespace: infra-pipeline-hml
